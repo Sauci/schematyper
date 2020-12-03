@@ -413,7 +413,7 @@ func processType(s *metaSchema, pName, pDesc, path, parentPath string) (typeRef 
 	}
 
 	hasAllOf := len(s.AllOf) > 0
-	if jsonType == "" && hasAllOf {
+	if hasAllOf {
 		for index, allOfSchema := range s.AllOf {
 			childPath := fmt.Sprintf("%s/allOf/%d", path, index)
 			gotType := processType(&allOfSchema, fmt.Sprintf("%sEmbedded%d", pName, index), allOfSchema.Description, childPath, path)
