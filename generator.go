@@ -29,6 +29,7 @@ var (
 	rootTypeName    = kingpin.Flag("root-type", `name of root type; default is generated from the filename`).String()
 	typeNamesPrefix = kingpin.Flag("prefix", `prefix for non-root types`).String()
 	ptrForOmit      = kingpin.Flag("ptr-for-omit", "use a pointer to a struct for an object property that is represented as a struct if the property is not required (i.e., has omitempty tag)").Default("false").Bool()
+	tagPrefixString = kingpin.Flag("tag-string", "tag value defining field format").Default("json").Short('t').String()
 	inputFile       = kingpin.Arg("input", "file containing a valid JSON schema").Required().ExistingFile()
 )
 
@@ -101,7 +102,7 @@ func (gt goType) print(buf *bytes.Buffer) {
 
 		var tagString string
 		if !sf.Embedded {
-			tagString = "`json:\"" + sf.PropertyName
+			tagString = "`"+*tagPrefixString+":\"" + sf.PropertyName
 			if !sf.Required {
 				if *ptrForOmit && sf.PtrForOmit && !sf.Nullable {
 					sfTypeStr = "*" + sfTypeStr
