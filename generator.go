@@ -102,7 +102,7 @@ func (gt goType) print(buf *bytes.Buffer) {
 
 		var tagString string
 		if !sf.Embedded {
-			tagString = "`"+*tagPrefixString+":\"" + sf.PropertyName
+			tagString = "`"+(*tagPrefixString)+":\"" + sf.PropertyName
 			if !sf.Required {
 				if *ptrForOmit && sf.PtrForOmit && !sf.Nullable {
 					sfTypeStr = "*" + sfTypeStr
